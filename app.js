@@ -1,8 +1,10 @@
 const express = require("express");
-<<<<<<< HEAD
 const path = require("path");
 const cookieParser = require("cookie-parser");
+const hbs = require('hbs');
+
 const app = express();
+const dbLayer = require('./config/db');
 
 const rootRouter = require("./routes/root");
 const usersRouter = require("./routes/users");
@@ -11,6 +13,7 @@ const numbersRouter = require("./routes/numbers");
 const port = 9000;
 
 app.set("view engine", "hbs");
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(cookieParser());
 app.use("/inc", express.static(path.join(__dirname, "inc")));
@@ -31,15 +34,6 @@ app.use("/users", usersRouter);
 app.use("/numbers", numbersRouter);
 
 app.listen(port, function() {
+	dbLayer.init();
 	return console.log("Sample App " + port + "!");
 });
-=======
-const app = express();
-const port = 9000;
-
-app.get('/', (req, res) => res.send('Hello!'));
-app.get('/user/:username', (req, res) => res.send("Welcome!" + req.params.username));
-
-app.listen(port, 
-    () => console.log(`Sample App ${port}!`));
->>>>>>> b9acee20241976a56e2944af75f3be84742662a7
